@@ -1,0 +1,92 @@
+{
+  "version": 2,
+  "secretKey": "2a6faeb0f9493a1ef636680110ccee55c03685ae56140856495ba834d56d8674",
+  "accounts": {
+    "ejen.bestari": {
+      "username": "ejen.bestari",
+      "passwordSalt": "2421ee1f036485dc3c1755137d1a6c74",
+      "passwordHash": "a8a76227641d030a1ec03f376beac5ce8dffd063f3cbb06ba820ca95ca82e361e607e8d391ca778eeb04b5a5d2ba1edb6c574cd58035fc9b20a1f7a2ecc7f121",
+      "role": "Anggota Penyiasat · Sekolah Seri Bestari",
+      "referenceNo": "REF-SB-001",
+      "createdAt": "2026-11-16T11:27:52.566Z",
+      "profile": {
+        "name": "Ejen Nurin Maisarah",
+        "className": "6 Bestari",
+        "codenameBadge": "Kanta Ilmu",
+        "agentId": "SB-26-6202",
+        "verifiedAt": "2026-11-16T11:35:38.246Z"
+      },
+      "accountRole": "student"
+    },
+    "profesor.nurin": {
+      "username": "profesor.nurin",
+      "passwordSalt": "3a3b6212e189717a6f4c04d03d883437",
+      "passwordHash": "8f0b96ef0cf905bcd5ce81cb7afcc80e0919e1cf176820497c29464cc0d1713b7d5c172993d4019fd3df78a26601442b88f8c17834ccd7f56e69c25c73fdbe82",
+      "role": "Pembimbing Operasi · Akademi Ejen Rahsia",
+      "referenceNo": "REF-SB-000",
+      "createdAt": "2026-11-16T11:27:52.567Z",
+      "profile": {
+        "name": "Profesor Nurin",
+        "className": "6 Bestari",
+        "codenameBadge": "Kanta Ilmu",
+        "agentId": "SB-26-0001",
+        "verifiedAt": "2026-11-16T11:27:52.567Z",
+        "photoUrl": "/assets/aistudio/Professor_Detective_in_the_Investigation_Office_54081002.png",
+        "designation": "Guru Bahasa Melayu · Pembimbing Operasi"
+      },
+      "accountRole": "teacher",
+      "assignedClasses": [
+        "5 Bestari",
+        "5 Cemerlang",
+        "6 Bestari",
+        "6 Harmoni"
+      ]
+    }
+  },
+  "classes": {
+    "cls_5_bestari": {
+      "id": "cls_5_bestari",
+      "name": "5 Bestari",
+      "yearLevel": "Tahun 5",
+      "sessionYear": "2026/2027",
+      "teacherUsername": "profesor.nurin",
+      "createdAt": "2026-11-19T13:26:41.267Z"
+    },
+    "cls_5_cemerlang": {
+      "id": "cls_5_cemerlang",
+      "name": "5 Cemerlang",
+      "yearLevel": "Tahun 5",
+      "sessionYear": "2026/2027",
+      "teacherUsername": "profesor.nurin",
+      "createdAt": "2026-11-19T13:26:41.267Z"
+    },
+    "cls_6_bestari": {
+      "id": "cls_6_bestari",
+      "name": "6 Bestari",
+      "yearLevel": "Tahun 6",
+      "sessionYear": "2026/2027",
+      "teacherUsername": "profesor.nurin",
+      "createdAt": "2026-11-19T13:26:41.267Z"
+    },
+    "cls_6_harmoni": {
+      "id": "cls_6_harmoni",
+      "name": "6 Harmoni",
+      "yearLevel": "Tahun 6",
+      "sessionYear": "2026/2027",
+      "teacherUsername": "profesor.nurin",
+      "createdAt": "2026-11-19T13:26:41.267Z"
+    }
+  },
+  "enrollments": [
+    {
+      "studentUsername": "ejen.bestari",
+      "classId": "cls_6_bestari",
+      "className": "6 Bestari",
+      "sessionYear": "2026/2027",
+      "enrolledAt": "2026-11-16T11:27:52.566Z"
+    }
+  ],
+  "studentRecords": {},
+  "teacherFeedback": [],
+  "activityLogs": []
+}

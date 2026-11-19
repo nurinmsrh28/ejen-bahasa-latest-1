@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejen Bahasa: Operasi Sekolah Impian</title>
+  <style>
+    :root {
+      --forest-deep: #183426;
+      --forest-mid: #234936;
+      --forest-soft: #2f5e47;
+      --ivory: #faf6ee;
+      --cream: #f2ead8;
+      --kraft: #e5d8bd;
+      --mustard: #d49b27;
+      --mustard-deep: #a97612;
+      --sage: #6f8f78;
+      --sage-light: #cddccf;
+      --terracotta: #c2593f;
+      --terracotta-deep: #9f432c;
+      --ink: #1b241e;
+      --ink-muted: #4b594f;
+      --line: rgba(24, 52, 38, 0.16);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background-color: var(--ivory);
+      background-image:
+        radial-gradient(rgba(27, 59, 43, 0.04) 1px, transparent 0),
+        radial-gradient(rgba(194, 89, 63, 0.03) 1px, transparent 0);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+      line-height: 1.5;
+    }
+    h1, h2, h3, .font-display {
+      font-family: Georgia, 'Times New Roman', serif;
+      margin: 0;
+    }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    button, input, textarea, select {
+      font: inherit;
+    }
+    button {
+      cursor: pointer;
+    }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 3px solid var(--mustard);
+      outline-offset: 2px;
+    }
+    .hidden { display: none !important; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 18px;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform 0.12s ease, background-color 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--terracotta); color: var(--ivory); }
+    .btn-primary:hover { background: var(--terracotta-deep); }
+    .btn-forest { background: var(--forest-deep); color: var(--ivory); }
+    .btn-forest:hover { background: var(--forest-mid); }
+    .btn-gold { background: var(--mustard); color: var(--forest-deep); }
+    .btn-gold:hover { background: var(--mustard-deep); color: var(--ivory); }
+    .btn-outline { background: var(--ivory); color: var(--forest-deep); border-color: var(--line); }
+    .btn-outline:hover { background: var(--cream); border-color: var(--forest-deep); }
+    .btn-sm { padding: 8px 13px; font-size: 12px; border-radius: 9px; }
+
+    /* Landing */
+    .landing-hero {
+      min-height: 100vh;
+      background: radial-gradient(circle at 75% 35%, #1d4430 0%, #0d2419 52%, #081710 100%);
+      color: var(--ivory);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .landing-backdrop-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.42;
+      pointer-events: none;
+    }
+    .landing-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(96deg, rgba(8, 23, 16, 0.94) 0%, rgba(10, 29, 20, 0.78) 45%, rgba(8, 23, 16, 0.4) 100%);
+      pointer-events: none;
+    }
+    .landing-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+      padding: 28px 0;
+    }
+    .dossier-stack {
+      position: relative;
+      padding-top: 8px;
+    }
+    .dossier-sheet-back {
+      position: absolute;
+      inset: 4px 8px 0 8px;
+      background: #d7c7a5;
+      border: 1px solid rgba(24, 52, 38, 0.25);
+      border-radius: 18px;
+      transform: rotate(-2deg);
+    }
+    .dossier-cover {
+      position: relative;
+      background: #ede3ce;
+      color: var(--ink);
+      border-radius: 18px;
+      border: 2px solid rgba(179, 142, 66, 0.75);
+      box-shadow: 0 22px 46px rgba(0, 0, 0, 0.48);
+      overflow: hidden;
+    }
+    .stamp-sulit {
+      display: inline-block;
+      font-family: ui-monospace, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--terracotta-deep);
+      border: 2px solid var(--terracotta-deep);
+      padding: 3px 9px;
+      transform: rotate(-2deg);
+      background: rgba(250, 246, 238, 0.7);
+    }
+    @media (max-width: 900px) {
+      .landing-grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--ivory);
+      color: var(--ink);
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(18, 40, 29, 0.08);
+    }
+    .card-cream {
+      background: var(--cream);
+      color: var(--ink);
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      padding: 18px;
+    }
+    .card-forest {
+      background: var(--forest-deep);
+      color: var(--ivory);
+      border-radius: 18px;
+      border: 2px solid rgba(212, 155, 39, 0.55);
+      padding: 24px;
+    }
+    .kicker {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--terracotta-deep);
+      margin: 0 0 4px 0;
+    }
+    .kicker-gold { color: var(--mustard); }
+
+    /* HUD Header */
+    .hud-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--forest-deep);
+      color: var(--ivory);
+      border-bottom: 2px solid rgba(212, 155, 39, 0.5);
+      padding: 10px 0;
+    }
+    .hud-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .grid-split { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 22px; align-items: start; }
+    .grid-builder { display: grid; grid-template-columns: 260px 1fr 310px; gap: 18px; align-items: start; }
+    @media (max-width: 1024px) {
+      .grid-builder { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 800px) {
+      .grid-2, .grid-split { grid-template-columns: 1fr; }
+    }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 11px;
+      border: 2px solid rgba(24, 52, 38, 0.22);
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 14px;
+    }
+    input[type="text"]:focus, textarea:focus, select:focus {
+      border-color: var(--forest-deep);
+      outline: none;
+    }
+    .alert-error {
+      padding: 11px 14px;
+      border-radius: 11px;
+      background: rgba(194, 89, 63, 0.12);
+      border: 1px solid var(--terracotta);
+      color: var(--terracotta-deep);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .alert-ok {
+      padding: 11px 14px;
+      border-radius: 11px;
+      background: #edf5ef;
+      border: 1px solid var(--forest-mid);
+      color: var(--forest-mid);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* Interactive Scene */
+    .scene-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 5 / 3;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid rgba(24, 52, 38, 0.25);
+      background: var(--kraft);
+    }
+    .hotspot-btn {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 2px solid var(--forest-deep);
+      background: rgba(250, 246, 238, 0.92);
+      color: var(--forest-deep);
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .hotspot-btn.found {
+      background: var(--forest-mid);
+      color: var(--ivory);
+      border-color: var(--mustard);
+    }
+    .hotspot-btn.spotlight {
+      background: var(--terracotta);
+      color: var(--ivory);
+      border-color: var(--ivory);
+      animation: beaconPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes beaconPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(194, 89, 63, 0.7); }
+      50% { box-shadow: 0 0 0 12px rgba(194, 89, 63, 0); }
+    }
+
+    /* Blueprint Builder Grid */
+    .blueprint-box {
+      background-color: #163326;
+      background-image:
+        linear-gradient(to right, rgba(205, 220, 207, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(205, 220, 207, 0.1) 1px, transparent 1px);
+      background-size: 26px 26px;
+      border-radius: 16px;
+      border: 2px solid var(--forest-deep);
+      padding: 16px;
+      color: var(--ivory);
+    }
+    .builder-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .grid-cell {
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      border: 1px solid rgba(250, 246, 238, 0.18);
+      background: rgba(29, 62, 46, 0.65);
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px;
+      position: relative;
+    }
+    .grid-cell.occupied {
+      background: var(--cream);
+      border-color: var(--ivory);
+    }
+    .grid-cell.selected {
+      background: var(--ivory);
+      border: 2px solid var(--mustard);
+    }
+
+    /* Modal & Toast */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(18, 40, 29, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-panel {
+      background: var(--ivory);
+      color: var(--ink);
+      border-radius: 18px;
+      border: 2px solid var(--forest-deep);
+      max-width: 760px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 24px;
+    }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 70;
+      background: var(--forest-deep);
+      color: var(--ivory);
+      border: 2px solid var(--mustard);
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #ffffff !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var STORAGE_KEY = 'ejen_bahasa_standalone_v1';
+
+      var LOCATIONS = [
+        {
+          id: 'kantin',
+          name: 'Kantin Ceria',
+          zone: 'Zon Utara · Blok Makan',
+          briefing: 'Kantin kelihatan sesak selepas waktu rehat. Perhatikan lantai, meja makan dan tong sampah.',
+          hints: [
+            'Tahap 1 (Umum): Lihat kawasan sekitar tempat murid makan dan membuang bungkusan makanan.',
+            'Tahap 2 (Khusus): Periksa lantai bawah meja, permukaan meja makan dan tong sampah di penjuru kanan.',
+            'Tahap 3 (Sorotan Visual): Lingkaran merah berdenyut menunjukkan objek yang belum diperiksa.'
+          ],
+          clues: [
+            { id: 'kantin_sampah', label: 'Sampah Bertaburan di Lantai', summary: 'Bungkusan plastik dan tisu makanan bertaburan di lantai kantin.', reaction: 'Pemerhatian tajam! Lantai yang kotor mengundang serangga perosak.', x: 28, y: 76 },
+            { id: 'kantin_meja', label: 'Sisa Makanan di Atas Meja', summary: 'Pinggan, cawan dan sisa makanan ditinggalkan di atas meja.', reaction: 'Tepat sekali. Sisa makanan di meja menyukarkan murid lain untuk makan.', x: 52, y: 54 },
+            { id: 'kantin_tong', label: 'Tong Sampah Penuh Melimpah', summary: 'Tong sampah kecil tidak mencukupi dan telah penuh melimpah keluar.', reaction: 'Petunjuk penting! Tong sampah yang terhad menyebabkan sampah sukar dibuang.', x: 83, y: 62 }
+          ]
+        },
+        {
+          id: 'kelas',
+          name: 'Kelas Harmoni',
+          zone: 'Zon Barat · Blok Akademik',
+          briefing: 'Teliti susunan meja, papan sudut pembelajaran dan rak bahan bacaan di dalam kelas.',
+          hints: [
+            'Tahap 1 (Umum): Imbas susunan ruang belajar murid serta dinding dan rak di bahagian belakang kelas.',
+            'Tahap 2 (Khusus): Perhatikan barisan meja dan kerusi, papan sudut pembelajaran dan rak bahan bantu belajar.',
+            'Tahap 3 (Sorotan Visual): Sorotan visual telah diaktifkan pada objek bermasalah.'
+          ],
+          clues: [
+            { id: 'kelas_meja', label: 'Meja & Kerusi Tidak Tersusun', summary: 'Meja dan kerusi berselerak serta menghalang laluan kelas.', reaction: 'Bagus! Susunan yang tidak teratur mengganggu pergerakan dan fokus belajar.', x: 34, y: 69 },
+            { id: 'kelas_sudut', label: 'Sudut Pembelajaran Kurang Menarik', summary: 'Papan sudut pembelajaran kosong dan tiada bahan visual terkini.', reaction: 'Benar sekali. Sudut pembelajaran yang ceria merangsang minat murid.', x: 70, y: 34 },
+            { id: 'kelas_bahan', label: 'Bahan Pembelajaran Bersepah', summary: 'Buku latihan dan alat bantu belajar bertimbun tanpa label di rak.', reaction: 'Catatan baik! Bahan yang tersusun memudahkan aktiviti pembelajaran.', x: 84, y: 68 }
+          ]
+        },
+        {
+          id: 'perpustakaan',
+          name: 'Perpustakaan Ilmu',
+          zone: 'Zon Timur · Gedung Ilmu',
+          briefing: 'Suasana perpustakaan kelihatan tidak terurus. Periksa rak buku dan ruang membaca.',
+          hints: [
+            'Tahap 1 (Umum): Perhatikan bagaimana buku disimpan dan bagaimana ruang membaca disediakan.',
+            'Tahap 2 (Khusus): Semak susunan buku pada rak utama, meja bacaan dan sudut santai berkarpet.',
+            'Tahap 3 (Sorotan Visual): Ikuti penanda berdenyut untuk baki petunjuk di perpustakaan.'
+          ],
+          clues: [
+            { id: 'perpus_buku', label: 'Buku Tidak Mengikut Kategori', summary: 'Buku cerita, rujukan dan majalah bercampur aduk tanpa label kategori.', reaction: 'Tepat! Buku tanpa kategori menyukarkan murid mencari bahan bacaan.', x: 25, y: 40 },
+            { id: 'perpus_selesa', label: 'Ruang Membaca Kurang Selesa', summary: 'Kerusi keras, meja sempit dan pencahayaan sudut membaca malap.', reaction: 'Pemerhatian teliti! Keselesaan tempat duduk penting untuk pembaca.', x: 56, y: 62 },
+            { id: 'perpus_sudut', label: 'Sudut Bacaan Tidak Dimanfaatkan', summary: 'Ruang bacaan berkarpet dipenuhi kotak lama dan tidak digunakan.', reaction: 'Betul! Sudut bacaan yang lapang dapat memupuk minat membaca.', x: 82, y: 68 }
+          ]
+        },
+        {
+          id: 'taman',
+          name: 'Taman Rekreasi',
+          zone: 'Zon Selatan · Laman Hijau',
+          briefing: 'Periksa keadaan tumbuhan, keceriaan laman dan kemudahan tempat duduk untuk murid.',
+          hints: [
+            'Tahap 1 (Umum): Tinjau keadaan pokok bunga, suasana keseluruhan laman dan kemudahan berehat.',
+            'Tahap 2 (Khusus): Perhatikan batas tumbuhan yang layu, papan info laman dan ruang teduh tanpa bangku.',
+            'Tahap 3 (Sorotan Visual): Gunakan sorotan pada lokasi taman untuk mengesan baki petunjuk.'
+          ],
+          clues: [
+            { id: 'taman_tumbuhan', label: 'Tumbuhan Layu & Kurang Dijaga', summary: 'Batas pokok bunga kering dan ditumbuhi rumput liar.', reaction: 'Bagus! Tumbuhan yang subur menceriakan suasana dan mendidik sikap prihatin.', x: 25, y: 67 },
+            { id: 'taman_kawasan', label: 'Kawasan Rekreasi Kurang Menarik', summary: 'Laman suram dan tiada papan informasi taman herba.', reaction: 'Pemerhatian bernas! Laman yang menarik boleh menjadi ruang belajar luar.', x: 52, y: 46 },
+            { id: 'taman_duduk', label: 'Kekurangan Tempat Duduk', summary: 'Tiada bangku di bawah teduhan pokok untuk murid berehat.', reaction: 'Tepat sekali! Bangku membolehkan murid berehat dan membaca dengan selesa.', x: 80, y: 66 }
+          ]
+        }
+      ];
+
+      var LOGIC_CHALLENGES = [
+        {
+          id: 'logic_kantin',
+          title: 'Kes 1 · Kebersihan Kantin Ceria',
+          opinion: 'Pada pendapat saya, pihak sekolah perlu menyediakan lebih banyak tong sampah di kantin.',
+          options: [
+            { id: 'A', text: 'Murid dapat membuang sampah dengan mudah dan persekitaran menjadi lebih bersih.', ok: true, exp: 'Tepat! Pilihan A menerangkan kesan langsung dan manfaat daripada cadangan menambah tong sampah.' },
+            { id: 'B', text: 'Kantin merupakan tempat murid membeli makanan.', ok: false, exp: 'Pilihan B hanya menyatakan fakta umum tentang kantin, bukan alasan menyokong pendapat.' }
+          ]
+        },
+        {
+          id: 'logic_kelas',
+          title: 'Kes 2 · Susunan & Sudut Kelas Harmoni',
+          opinion: 'Pada pendapat saya, susunan meja di Kelas Harmoni wajar dikemaskan dan sudut pembelajaran perlu diceriakan.',
+          options: [
+            { id: 'A', text: 'Kelas Harmoni mempunyai tingkap kaca dan pintu kayu.', ok: false, exp: 'Pilihan A sekadar huraian fizikal bilik darjah dan tidak menyokong pendapat.' },
+            { id: 'B', text: 'Ruang yang kemas dan ceria melancarkan pergerakan serta meningkatkan tumpuan murid.', ok: true, exp: 'Syabas! Pilihan B menghubungkan perubahan ruang dengan kesannya kepada pembelajaran murid.' }
+          ]
+        },
+        {
+          id: 'logic_taman',
+          title: 'Kes 3 · Laman Taman Rekreasi',
+          opinion: 'Pada pendapat saya, kita wajar menanam semula pokok bunga dan menambah bangku di Taman Rekreasi.',
+          options: [
+            { id: 'A', text: 'Taman yang hijau dan berbangku membolehkan murid berehat dengan selesa sambil menghargai alam.', ok: true, exp: 'Cemerlang! Pilihan A ialah alasan relevan yang menyokong tujuan penambahbaikan taman.' },
+            { id: 'B', text: 'Rumput dan daun pokok berwarna hijau pada waktu siang.', ok: false, exp: 'Pilihan B hanya menyebut warna tumbuhan, tidak menyokong cadangan menaik taraf taman.' }
+          ]
+        }
+      ];
+
+      var ASSETS = [
+        { id: 'kantin', name: 'Kantin', short: 'KAN' },
+        { id: 'bilik_darjah', name: 'Bilik Darjah', short: 'KLS' },
+        { id: 'perpustakaan', name: 'Perpustakaan', short: 'PRP' },
+        { id: 'taman_herba', name: 'Taman Herba', short: 'HRB' },
+        { id: 'taman_permainan', name: 'Taman Permainan', short: 'PRM' },
+        { id: 'padang', name: 'Padang', short: 'PDG' },
+        { id: 'tong_sampah', name: 'Tong Sampah', short: 'TONG' },
+        { id: 'cuci_tangan', name: 'Tempat Cuci Tangan', short: 'CUCI' },
+        { id: 'bangku', name: 'Bangku', short: 'BNG' },
+        { id: 'pokok', name: 'Pokok', short: 'PKK' },
+        { id: 'bunga', name: 'Bunga', short: 'BNG2' },
+        { id: 'laluan', name: 'Laluan Pejalan Kaki', short: 'LAL' }
+      ];
+
+      var BADGES = [
+        { id: 'mata_helang', name: 'Mata Helang', desc: 'Menyiasat keempat-empat lokasi.' },
+        { id: 'penganalisis_kes', name: 'Penganalisis Kes', desc: 'Menulis ayat pendapat dalam Fasa 2.' },
+        { id: 'ahli_logik', name: 'Ahli Logik', desc: 'Menguasai Makmal Bukti Fasa 3.' },
+        { id: 'pereka_bestari', name: 'Pereka Bestari', desc: 'Menyiapkan Pelan Studio Arkitek.' },
+        { id: 'arkitek_impian', name: 'Arkitek Sekolah Impian', desc: 'Menyiapkan Laporan Sekolah Impian.' }
+      ];
+
+      function defaultState() {
+        return {
+          profile: null,
+          xp: 0,
+          milestones: [],
+          soundEnabled: true,
+          investigations: {
+            kantin: { clues: [], hint: 0, notes: '', proposal: '', completed: false },
+            kelas: { clues: [], hint: 0, notes: '', proposal: '', completed: false },
+            perpustakaan: { clues: [], hint: 0, notes: '', proposal: '', completed: false },
+            taman: { clues: [], hint: 0, notes: '', proposal: '', completed: false }
+          },
+          selectedEvidence: [],
+          opinions: {
+            kantin: { opinion: '', reason: '' },
+            kelas: { opinion: '', reason: '' },
+            perpustakaan: { opinion: '', reason: '' },
+            taman: { opinion: '', reason: '' }
+          },
+          logicAnswers: {},
+          builderPlan: [
+            { uid: 'b1', assetId: 'kantin', row: 0, col: 1, action: 'ubah_suai', locId: 'kantin', justification: '' },
+            { uid: 'b2', assetId: 'bilik_darjah', row: 0, col: 5, action: 'ubah_suai', locId: 'kelas', justification: '' },
+            { uid: 'b3', assetId: 'taman_herba', row: 3, col: 1, action: 'ubah_suai', locId: 'taman', justification: '' },
+            { uid: 'b4', assetId: 'perpustakaan', row: 3, col: 5, action: 'ubah_suai', locId: 'perpustakaan', justification: '' }
+          ],
+          builderSaved: false,
+          finalReport: '',
+          finalReportSaved: false
+        };
+      }
+
+      function loadState() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return defaultState();
+          var parsed = JSON.parse(raw);
+          var base = defaultState();
+          return Object.assign(base, parsed);
+        } catch (e) {
+          return defaultState();
+        }
+      }
+
+      var state = loadState();
+      var ui = {
+        screen: state.profile ? 'title' : 'title',
+        dossierOpen: false,
+        guideOpen: false,
+        evidenceModal: false,
+        decisionModal: false,
+        activeLocId: 'kantin',
+        activeClueId: null,
+        activeAssetId: null,
+        movingUid: null,
+        selectedUid: state.builderPlan[0] ? state.builderPlan[0].uid : null,
+        previewReport: state.finalReportSaved,
+        errorMsg: '',
+        okMsg: '',
+        confirmReset: false
+      };
+
+      var audioCtx = null;
+      function beep(freq, dur) {
+        if (!state.soundEnabled) return;
+        try {
+          var Ctx = window.AudioContext || window.webkitAudioContext;
+          if (!Ctx) return;
+          if (!audioCtx) audioCtx = new Ctx();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          var osc = audioCtx.createOscillator();
+          var g = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.value = freq;
+          g.gain.setValueAtTime(0.05, audioCtx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+          osc.connect(g);
+          g.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + dur);
+        } catch (e) {}
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {}
+      }
+
+      function showToast(msg) {
+        var el = document.getElementById('toast');
+        el.textContent = msg;
+        el.classList.remove('hidden');
+        setTimeout(function () { el.classList.add('hidden'); }, 3000);
+      }
+
+      function awardXp(key, amount) {
+        if (state.milestones.indexOf(key) !== -1) return 0;
+        state.milestones.push(key);
+        state.xp += amount;
+        return amount;
+      }
+
+      function getRank() {
+        if (state.finalReportSaved || state.xp >= 1000) return 'Arkitek Sekolah Impian';
+        if (state.xp >= 600) return 'Ejen Pakar';
+        if (state.xp >= 250) return 'Ejen Penyiasat';
+        return 'Ejen Pelatih';
+      }
+
+      function phase1Done() {
+        return LOCATIONS.every(function (l) { return state.investigations[l.id].completed; });
+      }
+      function phase2Done() {
+        return state.selectedEvidence.length >= 2 &&
+          state.selectedEvidence.length <= 3 &&
+          state.selectedEvidence.every(function (id) {
+            return (state.opinions[id].opinion || '').trim().length >= 10;
+          });
+      }
+      function logicDone() {
+        return LOGIC_CHALLENGES.every(function (ch) {
+          var ans = state.logicAnswers[ch.id];
+          return ch.options.some(function (o) { return o.id === ans && o.ok; });
+        });
+      }
+      function phase3Done() {
+        return phase2Done() && logicDone() && state.selectedEvidence.every(function (id) {
+          return (state.opinions[id].reason || '').trim().length >= 10;
+        });
+      }
+      function justifiedCount() {
+        return state.builderPlan.filter(function (p) {
+          return (p.justification || '').trim().length >= 8;
+        }).length;
+      }
+      function phase4Done() {
+        return state.builderSaved && justifiedCount() >= 2;
+      }
+      function earnedBadges() {
+        var list = [];
+        if (phase1Done()) list.push('mata_helang');
+        if (phase2Done()) list.push('penganalisis_kes');
+        if (phase3Done()) list.push('ahli_logik');
+        if (phase4Done()) list.push('pereka_bestari');
+        if (state.finalReportSaved) list.push('arkitek_impian');
+        return list;
+      }
+      function countSentences(txt) {
+        var c = (txt || '').trim();
+        if (!c) return 0;
+        return c.split(/[.!?]+/).map(function (s) { return s.trim(); }).filter(function (s) { return s.length >= 3; }).length;
+      }
+
+      function esc(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function sceneSvg(locId) {
+        if (locId === 'kantin') {
+          return '<svg viewBox="0 0 800 480" width="100%" height="100%">' +
+            '<rect width="800" height="310" fill="#EFE4CC"/><rect y="310" width="800" height="170" fill="#D9C8A9"/>' +
+            '<rect x="45" y="75" width="310" height="165" rx="6" fill="#234936" stroke="#183426" stroke-width="3"/>' +
+            '<rect x="65" y="95" width="270" height="78" fill="#FAF6EE"/><text x="200" y="138" text-anchor="middle" fill="#183426" font-size="18" font-weight="bold">KAUNTER KANTIN CERIA</text>' +
+            '<rect x="280" y="255" width="250" height="18" rx="4" fill="#B87D14" stroke="#183426" stroke-width="2"/>' +
+            '<rect x="330" y="240" width="52" height="14" fill="#FAF6EE" stroke="#183426" stroke-width="1.5"/>' +
+            '<polygon points="160,360 190,348 205,372 170,378" fill="#FAF6EE" stroke="#183426" stroke-width="1.5"/>' +
+            '<polygon points="220,375 245,365 256,388 228,392" fill="#C2593F" stroke="#183426" stroke-width="1.5"/>' +
+            '<rect x="635" y="275" width="66" height="95" rx="6" fill="#2F5E47" stroke="#183426" stroke-width="3"/>' +
+            '<circle cx="655" cy="264" r="14" fill="#FAF6EE" stroke="#183426" stroke-width="2"/>' +
+            '<circle cx="678" cy="260" r="15" fill="#C2593F" stroke="#183426" stroke-width="2"/>' +
+            '</svg>';
+        }
+        if (locId === 'kelas') {
+          return '<svg viewBox="0 0 800 480" width="100%" height="100%">' +
+            '<rect width="800" height="310" fill="#F2EAD8"/><rect y="310" width="800" height="170" fill="#D2BE9B"/>' +
+            '<rect x="60" y="55" width="320" height="140" rx="6" fill="#183426" stroke="#7D4E32" stroke-width="8"/>' +
+            '<text x="220" y="130" text-anchor="middle" fill="#FAF6EE" font-size="20" font-weight="bold">KELAS HARMONI</text>' +
+            '<rect x="465" y="58" width="230" height="160" fill="#DFD4BC" stroke="#7D4E32" stroke-width="6"/>' +
+            '<text x="580" y="92" text-anchor="middle" fill="#4B594F" font-size="13" font-weight="bold">SUDUT PEMBELAJARAN</text>' +
+            '<rect x="115" y="295" width="95" height="40" transform="rotate(-12 115 295)" fill="#B87D14" stroke="#183426" stroke-width="2"/>' +
+            '<rect x="255" y="305" width="95" height="40" transform="rotate(14 255 305)" fill="#D49B27" stroke="#183426" stroke-width="2"/>' +
+            '<rect x="605" y="240" width="140" height="165" fill="#8C5A3C" stroke="#183426" stroke-width="3"/>' +
+            '<rect x="620" y="265" width="45" height="22" transform="rotate(-12 620 265)" fill="#FAF6EE"/>' +
+            '<rect x="675" y="315" width="52" height="22" transform="rotate(9 675 315)" fill="#C2593F"/>' +
+            '</svg>';
+        }
+        if (locId === 'perpustakaan') {
+          return '<svg viewBox="0 0 800 480" width="100%" height="100%">' +
+            '<rect width="800" height="315" fill="#E8DFCB"/><rect y="315" width="800" height="165" fill="#B69974"/>' +
+            '<rect x="55" y="65" width="250" height="275" rx="5" fill="#6E472D" stroke="#183426" stroke-width="3"/>' +
+            '<rect x="75" y="90" width="210" height="50" fill="#462C1B"/>' +
+            '<rect x="85" y="96" width="18" height="38" fill="#C2593F"/>' +
+            '<rect x="120" y="102" width="42" height="16" fill="#D49B27"/>' +
+            '<rect x="370" y="245" width="160" height="16" fill="#8C5A3C" stroke="#183426" stroke-width="2"/>' +
+            '<rect x="385" y="290" width="42" height="10" fill="#A67652" stroke="#183426" stroke-width="2"/>' +
+            '<rect x="605" y="285" width="75" height="65" fill="#C9A875" stroke="#183426" stroke-width="2"/>' +
+            '<text x="642" y="322" text-anchor="middle" fill="#183426" font-size="11" font-weight="bold">KOTAK LAMA</text>' +
+            '</svg>';
+        }
+        return '<svg viewBox="0 0 800 480" width="100%" height="100%">' +
+          '<rect width="800" height="270" fill="#DDE7DE"/><rect y="270" width="800" height="210" fill="#9EB398"/>' +
+          '<rect x="75" y="310" width="210" height="55" rx="6" fill="#7D5C43" stroke="#183426" stroke-width="2"/>' +
+          '<path d="M115 310 C115 282 92 280 86 292" stroke="#8F7A48" stroke-width="4" fill="none"/>' +
+          '<rect x="410" y="185" width="95" height="58" rx="4" fill="#E5D8BD" stroke="#5D3A24" stroke-width="3"/>' +
+          '<rect x="570" y="330" width="140" height="44" rx="6" fill="#FAF6EE" fill-opacity="0.5" stroke="#C2593F" stroke-width="2.5" stroke-dasharray="6 4"/>' +
+          '<text x="640" y="357" text-anchor="middle" fill="#9F432C" font-size="12" font-weight="bold">TIADA BANGKU</text>' +
+          '</svg>';
+      }
+
+      function renderHud() {
+        var rank = getRank();
+        var badges = earnedBadges().length;
+        return '<header class="hud-header no-print"><div class="container hud-inner">' +
+          '<div style="display:flex;align-items:center;gap:12px">' +
+          '<button class="btn btn-forest btn-sm" data-nav="hq">' +
+          '<strong>' + esc(state.profile.name) + '</strong> · ' + esc(state.profile.className) + ' · ' + esc(rank) +
+          '</button></div>' +
+          '<div style="display:flex;align-items:center;gap:16px;font-size:13px">' +
+          '<span class="mono"><strong>' + state.xp + '</strong> XP</span>' +
+          '<span class="mono"><strong>' + badges + '/5</strong> Lencana</span></div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:8px">' +
+          (ui.screen !== 'hq' ? '<button class="btn btn-outline btn-sm" data-nav="hq">Pusat Operasi</button>' : '') +
+          '<button class="btn btn-outline btn-sm" data-action="open-evidence">Fail Bukti</button>' +
+          '<button class="btn btn-outline btn-sm" data-action="open-decision">Kad Keputusan</button>' +
+          '<button class="btn btn-gold btn-sm" data-action="toggle-sound">' + (state.soundEnabled ? 'Bunyi: Aktif' : 'Bunyi: Senyap') + '</button>' +
+          '</div></div></header>';
+      }
+
+      function renderLanding() {
+        var hasProfile = Boolean(state.profile);
+        var schoolSvg = '<svg class="landing-backdrop-svg" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' +
+          '<g transform="translate(510,165)" fill="#183828">' +
+          '<rect x="20" y="130" width="200" height="165"/><rect x="440" y="130" width="200" height="165"/>' +
+          '<rect x="210" y="95" width="240" height="200"/><rect x="285" y="18" width="90" height="90"/>' +
+          '<polygon points="273,20 330,-22 387,20" fill="#9F432C"/><circle cx="330" cy="56" r="20" fill="#FAF6EE" stroke="#D49B27" stroke-width="3"/>' +
+          '<rect x="55" y="160" width="28" height="40" rx="4" fill="#E8B857"/><rect x="115" y="160" width="28" height="40" rx="4" fill="#E8B857"/>' +
+          '<rect x="475" y="160" width="28" height="40" rx="4" fill="#E8B857"/><rect x="535" y="160" width="28" height="40" rx="4" fill="#E8B857"/>' +
+          '<rect x="245" y="135" width="30" height="46" rx="15" fill="#F2CA6B"/><rect x="385" y="135" width="30" height="46" rx="15" fill="#F2CA6B"/>' +
+          '</g></svg>';
+
+        return '<div class="landing-hero">' + schoolSvg + '<div class="landing-scrim"></div>' +
+          '<div class="container" style="position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(212,155,39,0.2);padding-bottom:12px">' +
+          '<div><p class="kicker kicker-gold" style="margin:0;letter-spacing:0.16em">Akademi Ejen Bahasa</p><p style="margin:0;font-size:12px;color:#CDDCCF">Secret Language Academy · The School Investigation Project</p></div>' +
+          '<button class="btn btn-outline btn-sm" data-action="toggle-sound">' + (state.soundEnabled ? 'Bunyi: Aktif' : 'Bunyi: Senyap') + '</button></div>' +
+          '<div class="container landing-grid">' +
+          '<div>' +
+          '<p class="kicker kicker-gold">Misi Penyiasatan Khas · Sekolah Seri Bestari</p>' +
+          '<h1 style="font-size:clamp(2.8rem,5.5vw,4.4rem);line-height:1.02;margin-bottom:8px;text-shadow:0 6px 24px rgba(0,0,0,0.5)">EJEN BAHASA</h1>' +
+          '<p class="font-display" style="font-size:24px;font-style:italic;color:#E9C574;margin:0 0 8px">Operasi Sekolah Impian</p>' +
+          '<p class="mono" style="font-size:12px;letter-spacing:0.24em;color:#CDDCCF;margin:0 0 20px">SIASAT • FIKIR • CIPTA</p>' +
+          '<div class="card" style="margin-bottom:22px;background:#FAF6EE;border:1px solid rgba(212,155,39,0.6)"><p class="kicker">Profesor Citra · Pembimbing Operasi</p>' +
+          '<p style="margin:0;font-size:15px">“Selamat datang, Ejen! Saya Profesor Citra. Sekolah Seri Bestari sedang menghadapi beberapa masalah yang memerlukan penyiasatan anda. Saya telah menemui beberapa petunjuk awal. Bersediakah anda menerima operasi ini?”</p></div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">' +
+          '<button class="btn btn-primary" data-nav="' + (hasProfile ? 'hq' : 'profile') + '">SAMBUNG PENGEMBARAAN</button>' +
+          '<button class="btn btn-gold" data-action="open-guide">PANDUAN PERMAINAN</button>' +
+          (hasProfile ? '<button class="btn btn-forest btn-sm" data-nav="profile">Tukar Ejen (' + esc(state.profile.name) + ')</button>' : '') +
+          '</div></div>' +
+          '<div class="dossier-stack"><div class="dossier-sheet-back"></div><div class="dossier-cover">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;background:#e3d4b6;border-bottom:1px solid var(--line);padding:14px 18px">' +
+          '<div><p class="kicker mono" style="margin:0">Kod Operasi: OP-SB // 001</p><h2 style="font-size:19px;color:#143525">Fail Sulit · Sekolah Seri Bestari</h2></div>' +
+          '<button class="btn btn-forest btn-sm" data-action="toggle-dossier">' + (ui.dossierOpen ? 'Tutup Fail' : 'Buka Fail') + '</button></div>' +
+          '<div style="padding:18px;display:grid;gap:12px">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center"><span class="stamp-sulit">SULIT AKADEMI</span><span class="mono" style="font-size:12px;color:var(--ink-muted)">4 Lokasi · 5 Fasa</span></div>' +
+          (!ui.dossierOpen
+            ? '<div class="card" style="padding:16px"><p style="margin:0;font-size:14px;color:var(--ink-muted)">Fail ini menyimpan maklumat empat kawasan sekolah yang bermasalah. Klik <strong>Buka Fail</strong> untuk menyemak ringkasan misi sebelum memulakan penyiasatan.</p></div>'
+            : '<div class="card" style="padding:16px"><ul style="margin:0;padding-left:18px;font-size:14px"><li><strong>Fasa 1:</strong> Siasat Kantin, Kelas, Perpustakaan & Taman.</li><li><strong>Fasa 2:</strong> Pilih 2–3 bukti dan bina ayat pendapat.</li><li><strong>Fasa 3 & Akhir:</strong> Buktikan teori, reka Pelan Sekolah Impian & tulis laporan.</li></ul></div>') +
+          '</div></div></div></div>' +
+          '<div class="container" style="position:relative;z-index:2;font-size:12px;color:#CDDCCF">Penyimpanan setempat automatik (localStorage) · Versi HTML5 Kendiri</div></div>';
+      }
+
+      function renderProfile() {
+        return '<div class="container" style="padding:48px 20px;max-width:680px">' +
+          '<div class="card">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+          '<div><p class="kicker">Pendaftaran Identiti</p><h1 style="font-size:26px">Kad Tugas Ejen</h1></div>' +
+          '<button class="btn btn-outline btn-sm" data-nav="title">Kembali</button></div>' +
+          '<form id="profile-form" style="display:grid;gap:14px">' +
+          '<div><label for="inp-name" style="font-weight:600;font-size:14px">Nama Ejen</label>' +
+          '<input id="inp-name" type="text" value="' + esc(state.profile ? state.profile.name : '') + '" placeholder="Contoh: Ejen Amir" /></div>' +
+          '<div><label for="inp-class" style="font-weight:600;font-size:14px">Kelas</label>' +
+          '<input id="inp-class" type="text" value="' + esc(state.profile ? state.profile.className : '') + '" placeholder="Contoh: 5 Bestari" /></div>' +
+          (ui.errorMsg ? '<div class="alert-error">' + esc(ui.errorMsg) + '</div>' : '') +
+          '<button type="submit" class="btn btn-primary">Sahkan Identiti</button>' +
+          '</form></div></div>';
+      }
+
+      function renderHq() {
+        var doneLocs = LOCATIONS.filter(function (l) { return state.investigations[l.id].completed; }).length;
+        var badges = earnedBadges();
+        var nextScreen = !phase1Done() ? 'phase1' : !phase2Done() ? 'phase2' : !phase3Done() ? 'phase3' : !phase4Done() ? 'phase4' : 'phase5';
+        return '<div class="container" style="padding:26px 20px;display:grid;gap:22px">' +
+          '<section class="card-forest">' +
+          '<p class="kicker kicker-gold">Pusat Operasi Ejen · ' + esc(getRank()) + '</p>' +
+          '<h1 style="font-size:30px;margin-bottom:8px">Selamat bertugas, ' + esc(state.profile.name) + '!</h1>' +
+          '<p style="margin:0 0 16px;color:#CDDCCF">Status Lokasi Selesai: <strong class="mono">' + doneLocs + '/4</strong> · Mata Pengalaman: <strong class="mono">' + state.xp + ' XP</strong></p>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:10px">' +
+          '<button class="btn btn-primary" data-nav="' + nextScreen + '">Sambung Pengembaraan</button>' +
+          '<button class="btn btn-gold" data-action="open-evidence">Fail Bukti Ejen</button>' +
+          '<button class="btn btn-outline" data-action="open-decision">Kad Keputusan Ejen</button>' +
+          '</div></section>' +
+          '<div class="grid-split">' +
+          '<section class="card"><p class="kicker">Peta Operasi Sekolah Seri Bestari</p><h2 style="font-size:22px;margin-bottom:14px">Empat Lokasi Penyiasatan</h2>' +
+          '<div class="grid-2">' +
+          LOCATIONS.map(function (loc) {
+            var inv = state.investigations[loc.id];
+            return '<button class="card-cream" style="text-align:left;border:2px solid ' + (inv.completed ? 'var(--forest-mid)' : 'var(--line)') + '" data-open-loc="' + loc.id + '">' +
+              '<p class="kicker">' + esc(loc.zone) + '</p>' +
+              '<h3 style="font-size:18px;margin-bottom:4px">' + esc(loc.name) + '</h3>' +
+              '<p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px">' + esc(loc.briefing) + '</p>' +
+              '<span class="mono" style="font-size:12px;font-weight:700">' + (inv.completed ? 'Selesai' : 'Petunjuk: ' + inv.clues.length + '/3') + '</span></button>';
+          }).join('') +
+          '</div></section>' +
+          '<section class="card" style="display:grid;gap:12px"><p class="kicker">Laluan Operasi</p><h2 style="font-size:22px">Status Misi</h2>' +
+          renderPhaseRow('Fasa 1 · Operasi Jejak Bukti', doneLocs + '/4 lokasi selesai', true, 'phase1') +
+          renderPhaseRow('Fasa 2 · Makmal Analisis Kes', phase2Done() ? 'Selesai' : phase1Done() ? 'Terbuka' : 'Terkunci', phase1Done(), 'phase2') +
+          renderPhaseRow('Fasa 3 · Buktikan Teori Ejen', phase3Done() ? 'Selesai' : phase2Done() ? 'Terbuka' : 'Terkunci', phase2Done(), 'phase3') +
+          renderPhaseRow('Cabaran Akhir · Studio Arkitek', phase4Done() ? 'Selesai' : phase3Done() ? 'Terbuka' : 'Terkunci', phase3Done(), 'phase4') +
+          renderPhaseRow('Produk Akhir · Laporan Sekolah Impian', state.finalReportSaved ? 'Selesai' : phase4Done() ? 'Terbuka' : 'Terkunci', phase4Done(), 'phase5') +
+          '</section></div>' +
+          '<div class="grid-split">' +
+          '<section class="card"><p class="kicker">Lencana Pencapaian</p><h2 style="font-size:20px;margin-bottom:12px">Lencana Ejen (' + badges.length + '/5)</h2>' +
+          '<div class="grid-2">' +
+          BADGES.map(function (b) {
+            var got = badges.indexOf(b.id) !== -1;
+            return '<div class="card-cream" style="opacity:' + (got ? '1' : '0.55') + ';border:1px solid ' + (got ? 'var(--mustard)' : 'var(--line)') + '">' +
+              '<strong>' + esc(b.name) + (got ? ' (Diperoleh)' : '') + '</strong><p style="font-size:12px;margin:4px 0 0;color:var(--ink-muted)">' + esc(b.desc) + '</p></div>';
+          }).join('') +
+          '</div></section>' +
+          '<section class="card-cream" style="display:grid;gap:10px"><p class="kicker">Penyimpanan Setempat</p><h2 style="font-size:20px">Rekod & Tetapan</h2>' +
+          '<p style="font-size:12px;color:var(--ink-muted);margin:0">Data disimpan secara automatik pada pelayar ini (localStorage).</p>' +
+          '<button class="btn btn-forest btn-sm" data-action="export-json">Eksport Rekod JSON</button>' +
+          (!ui.confirmReset
+            ? '<button class="btn btn-outline btn-sm" data-action="ask-reset">Tetapkan Semula Permainan</button>'
+            : '<div class="alert-error">Padam semua data permainan?<div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-primary btn-sm" data-action="confirm-reset">Ya, Padam</button><button class="btn btn-outline btn-sm" data-action="cancel-reset">Batal</button></div></div>') +
+          '</section></div></div>';
+      }
+
+      function renderPhaseRow(title, status, unlocked, screen) {
+        return '<div class="card-cream" style="display:flex;justify-content:space-between;align-items:center;gap:10px">' +
+          '<div><strong style="font-size:14px">' + esc(title) + '</strong><div style="font-size:12px;color:var(--ink-muted)">' + esc(status) + '</div></div>' +
+          (unlocked ? '<button class="btn btn-forest btn-sm" data-nav="' + screen + '">Buka</button>' : '<span style="font-size:12px;color:var(--ink-muted)">Terkunci</span>') +
+          '</div>';
+      }
+
+      function renderPhase1() {
+        var loc = LOCATIONS.filter(function (l) { return l.id === ui.activeLocId; })[0] || LOCATIONS[0];
+        var inv = state.investigations[loc.id];
+        var activeClue = loc.clues.filter(function (c) { return c.id === ui.activeClueId; })[0];
+        return '<div class="container" style="padding:24px 20px;display:grid;gap:18px">' +
+          '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px">' +
+          '<div><button class="btn btn-outline btn-sm" data-nav="hq">Kembali ke Pusat Operasi</button><h1 style="font-size:26px;margin-top:8px">Fasa 1 · Operasi Jejak Bukti</h1></div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:6px">' +
+          LOCATIONS.map(function (l) {
+            return '<button class="btn btn-sm ' + (l.id === loc.id ? 'btn-forest' : 'btn-outline') + '" data-open-loc="' + l.id + '">' + esc(l.name) + (state.investigations[l.id].completed ? ' ✓' : '') + '</button>';
+          }).join('') +
+          '</div></div>' +
+          '<div class="grid-split">' +
+          '<div style="display:grid;gap:16px"><div class="card">' +
+          '<p class="kicker">' + esc(loc.zone) + '</p><h2 style="font-size:22px">' + esc(loc.name) + ' (' + inv.clues.length + '/3 Petunjuk)</h2>' +
+          '<p style="font-size:13px;color:var(--ink-muted)">' + esc(loc.briefing) + '</p>' +
+          '<div class="scene-wrap">' + sceneSvg(loc.id) +
+          loc.clues.map(function (c, i) {
+            var found = inv.clues.indexOf(c.id) !== -1;
+            var spot = inv.hint >= 3 && !found;
+            return '<button type="button" class="hotspot-btn ' + (found ? 'found' : '') + ' ' + (spot ? 'spotlight' : '') + '" style="left:' + c.x + '%;top:' + c.y + '%" aria-label="Periksa: ' + esc(c.label) + '" data-clue="' + c.id + '">' + (found ? '✓' : (i + 1)) + '</button>';
+          }).join('') +
+          '</div></div>' +
+          '<div class="card-cream"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px">' +
+          '<strong style="font-size:13px">Bantuan Profesor Citra (' + inv.hint + '/3)</strong>' +
+          '<button class="btn btn-gold btn-sm" data-action="hint-next"' + (inv.hint >= 3 ? ' disabled' : '') + '>' + (inv.hint >= 3 ? 'Semua Bantuan Aktif' : 'Minta Petunjuk Tahap ' + (inv.hint + 1)) + '</button></div>' +
+          (activeClue ? '<p style="font-size:13px;margin:0 0 8px"><strong>' + esc(activeClue.label) + ':</strong> ' + esc(activeClue.summary) + ' <em>(' + esc(activeClue.reaction) + ')</em></p>' : '') +
+          loc.hints.slice(0, inv.hint).map(function (h) { return '<p style="font-size:12px;margin:4px 0;padding:8px;background:#fff;border-radius:8px">' + esc(h) + '</p>'; }).join('') +
+          '</div></div>' +
+          '<div class="card"><h3 style="font-size:19px;margin-bottom:12px">Catatan & Bukti Lokasi</h3>' +
+          '<form id="loc-save-form" style="display:grid;gap:12px">' +
+          '<div><label for="loc-notes" style="font-weight:600;font-size:13px">Catatan Pemerhatian Murid</label>' +
+          '<textarea id="loc-notes" rows="3" placeholder="Catatkan masalah yang ditemui...">' + esc(inv.notes) + '</textarea></div>' +
+          '<div><label for="loc-prop" style="font-weight:600;font-size:13px">Cadangan Penyelesaian Awal</label>' +
+          '<textarea id="loc-prop" rows="3" placeholder="Cadangkan penyelesaian awal...">' + esc(inv.proposal) + '</textarea></div>' +
+          (ui.errorMsg ? '<div class="alert-error">' + esc(ui.errorMsg) + '</div>' : '') +
+          (ui.okMsg ? '<div class="alert-ok">' + esc(ui.okMsg) + '</div>' : '') +
+          '<button type="submit" class="btn btn-primary">Simpan Bukti Lokasi</button>' +
+          (phase1Done() ? '<button type="button" class="btn btn-forest" data-nav="phase2">Teruskan ke Fasa 2: Makmal Analisis Kes</button>' : '') +
+          '</form></div></div></div>';
+      }
+
+      function renderPhase2() {
+        return '<div class="container" style="padding:24px 20px;display:grid;gap:18px">' +
+          '<div><button class="btn btn-outline btn-sm" data-nav="hq">Kembali ke Pusat Operasi</button>' +
+          '<h1 style="font-size:26px;margin-top:8px">Fasa 2 · Makmal Analisis Kes</h1>' +
+          '<p style="font-size:14px;color:var(--ink-muted)">Pilih 2 hingga 3 bukti di papan penyiasatan dan tulis ayat pendapat anda sendiri.</p></div>' +
+          '<div class="grid-2">' +
+          LOCATIONS.map(function (loc) {
+            var inv = state.investigations[loc.id];
+            var sel = state.selectedEvidence.indexOf(loc.id) !== -1;
+            return '<button type="button" class="card" style="text-align:left;border:2px solid ' + (sel ? 'var(--mustard)' : 'var(--line)') + ';background:' + (sel ? '#fff' : 'var(--cream)') + '" data-toggle-ev="' + loc.id + '">' +
+              '<div style="display:flex;justify-content:space-between"><strong>' + esc(loc.name) + '</strong><span>' + (sel ? 'Dipilih ✓' : 'Pilih Bukti') + '</span></div>' +
+              '<p style="font-size:12px;margin:8px 0 0"><strong>Catatan:</strong> ' + esc(inv.notes) + '</p>' +
+              '<p style="font-size:12px;margin:4px 0 0"><strong>Cadangan:</strong> ' + esc(inv.proposal) + '</p></button>';
+          }).join('') +
+          '</div>' +
+          '<form id="phase2-form" class="card" style="display:grid;gap:14px">' +
+          '<h2 style="font-size:20px">Penulisan Ayat Pendapat (' + state.selectedEvidence.length + '/3 Bukti Dipilih)</h2>' +
+          state.selectedEvidence.map(function (id) {
+            var loc = LOCATIONS.filter(function (l) { return l.id === id; })[0];
+            return '<div><label for="op-' + id + '" style="font-weight:700;font-size:13px">Pendapat bagi ' + esc(loc.name) + '</label>' +
+              '<div style="margin:6px 0"><button type="button" class="btn btn-outline btn-sm" data-starter="' + id + '">+ Sisip "Pada pendapat saya, pihak sekolah perlu "</button></div>' +
+              '<textarea id="op-' + id + '" data-op-id="' + id + '" rows="3" placeholder="Tulis ayat pendapat anda sendiri secara bebas...">' + esc(state.opinions[id].opinion) + '</textarea></div>';
+          }).join('') +
+          (ui.errorMsg ? '<div class="alert-error">' + esc(ui.errorMsg) + '</div>' : '') +
+          (ui.okMsg ? '<div class="alert-ok">' + esc(ui.okMsg) + '</div>' : '') +
+          '<div style="display:flex;flex-wrap:wrap;gap:10px"><button type="submit" class="btn btn-primary">Simpan ke Kad Keputusan Ejen</button>' +
+          (phase2Done() ? '<button type="button" class="btn btn-forest" data-nav="phase3">Teruskan ke Fasa 3: Buktikan Teori</button>' : '') +
+          '</div></form></div>';
+      }
+
+      function renderPhase3() {
+        return '<div class="container" style="padding:24px 20px;display:grid;gap:18px">' +
+          '<div><button class="btn btn-outline btn-sm" data-nav="hq">Kembali ke Pusat Operasi</button>' +
+          '<h1 style="font-size:26px;margin-top:8px">Fasa 3 · Buktikan Teori Ejen</h1>' +
+          '<p style="font-size:14px;color:var(--ink-muted)">Pilih alasan paling relevan dalam cabaran Makmal Bukti, kemudian tulis alasan bagi pendapat anda.</p></div>' +
+          LOGIC_CHALLENGES.map(function (ch) {
+            var picked = state.logicAnswers[ch.id];
+            var optObj = ch.options.filter(function (o) { return o.id === picked; })[0];
+            return '<div class="card" style="display:grid;gap:10px"><p class="kicker">' + esc(ch.title) + '</p>' +
+              '<p style="font-weight:700;margin:0">“' + esc(ch.opinion) + '”</p>' +
+              '<div class="grid-2">' +
+              ch.options.map(function (o) {
+                return '<button type="button" class="card-cream" style="text-align:left;border:2px solid ' + (picked === o.id ? (o.ok ? 'var(--forest-mid)' : 'var(--terracotta)') : 'var(--line)') + '" data-logic="' + ch.id + ':' + o.id + '"><strong>Pilihan ' + o.id + ':</strong> ' + esc(o.text) + '</button>';
+              }).join('') +
+              '</div>' +
+              (optObj ? '<div class="' + (optObj.ok ? 'alert-ok' : 'alert-error') + '">' + esc(optObj.exp) + '</div>' : '') +
+              '</div>';
+          }).join('') +
+          '<form id="phase3-form" class="card" style="display:grid;gap:14px">' +
+          '<h2 style="font-size:20px">Alasan Relevan Ejen Sendiri</h2>' +
+          state.selectedEvidence.map(function (id) {
+            var loc = LOCATIONS.filter(function (l) { return l.id === id; })[0];
+            return '<div class="card-cream"><p style="font-size:13px;margin:0 0 6px"><strong>' + esc(loc.name) + ':</strong> “' + esc(state.opinions[id].opinion) + '”</p>' +
+              '<label for="rs-' + id + '" style="font-size:12px;font-weight:700">Alasan Penyokong Anda</label>' +
+              '<textarea id="rs-' + id + '" data-rs-id="' + id + '" rows="2" placeholder="Terangkan sebab atau manfaat yang menyokong pendapat ini...">' + esc(state.opinions[id].reason) + '</textarea></div>';
+          }).join('') +
+          (ui.errorMsg ? '<div class="alert-error">' + esc(ui.errorMsg) + '</div>' : '') +
+          (ui.okMsg ? '<div class="alert-ok">' + esc(ui.okMsg) + '</div>' : '') +
+          '<div style="display:flex;flex-wrap:wrap;gap:10px"><button type="submit" class="btn btn-primary">Simpan Alasan ke Kad Keputusan</button>' +
+          (phase3Done() ? '<button type="button" class="btn btn-forest" data-nav="phase4">Buka Cabaran Akhir: Studio Arkitek</button>' : '') +
+          '</div></form></div>';
+      }
+
+      function renderPhase4() {
+        var selFac = state.builderPlan.filter(function (p) { return p.uid === ui.selectedUid; })[0] || null;
+        var cells = '';
+        for (var r = 0; r < 5; r++) {
+          for (var c = 0; c < 8; c++) {
+            var occ = state.builderPlan.filter(function (p) { return p.row === r && p.col === c; })[0];
+            var asset = occ ? ASSETS.filter(function (a) { return a.id === occ.assetId; })[0] : null;
+            cells += '<button type="button" class="grid-cell ' + (occ ? 'occupied ' : '') + (occ && occ.uid === ui.selectedUid ? 'selected' : '') + '" ' +
+              (occ ? 'draggable="true" data-drag-uid="' + occ.uid + '"' : '') +
+              ' data-cell="' + r + ':' + c + '" aria-label="Petak ' + (r + 1) + '-' + (c + 1) + '">' +
+              (asset ? '<span>' + esc(asset.short) + '</span>' + ((occ.justification || '').trim().length >= 8 ? '<span style="color:var(--forest-mid)">✓</span>' : '') : '') +
+              '</button>';
+          }
+        }
+        return '<div class="container" style="padding:24px 20px;display:grid;gap:18px">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">' +
+          '<div><button class="btn btn-outline btn-sm" data-nav="hq">Kembali ke Pusat Operasi</button><h1 style="font-size:26px;margin-top:8px">Cabaran Akhir · Studio Arkitek (School Builder)</h1></div>' +
+          '<span class="mono" style="font-weight:700">Justifikasi Lengkap: ' + justifiedCount() + '/2 min</span></div>' +
+          '<div class="grid-builder">' +
+          '<div class="card" style="display:grid;gap:8px"><p class="kicker">Panel Aset (Seret atau Klik)</p>' +
+          ASSETS.map(function (a) {
+            return '<button type="button" draggable="true" data-asset="' + a.id + '" class="btn btn-sm ' + (ui.activeAssetId === a.id ? 'btn-forest' : 'btn-outline') + '" style="justify-content:flex-start">' + esc(a.name) + '</button>';
+          }).join('') +
+          '</div>' +
+          '<div class="blueprint-box"><p class="kicker kicker-gold">Pelan Induk Sekolah Seri Bestari (8 × 5)</p>' +
+          '<div class="builder-grid">' + cells + '</div>' +
+          '<p style="font-size:11px;color:#CDDCCF;margin:10px 0 0">Seret aset ke grid atau klik aset lalu ketik mana-mana petak.</p></div>' +
+          '<div class="card" style="display:grid;gap:12px">' +
+          (selFac
+            ? '<div style="display:flex;justify-content:space-between;align-items:center"><strong>' + esc(ASSETS.filter(function (a) { return a.id === selFac.assetId; })[0].name) + '</strong>' +
+              '<div style="display:flex;gap:6px"><button type="button" class="btn btn-gold btn-sm" data-action="move-fac">' + (ui.movingUid ? 'Pilih Petak...' : 'Pindah') + '</button>' +
+              '<button type="button" class="btn btn-outline btn-sm" data-action="del-fac">Buang</button></div></div>' +
+              '<div><label style="font-size:12px;font-weight:700">Tindakan Reka Bentuk</label><select id="fac-action">' +
+              [['kekalkan','Kekalkan'],['ubah_suai','Ubah Suai'],['gantikan','Gantikan'],['tambah_baharu','Tambah Baharu'],['susun_semula','Susun Semula']].map(function (o) {
+                return '<option value="' + o[0] + '"' + (selFac.action === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
+              }).join('') + '</select></div>' +
+              '<div><label style="font-size:12px;font-weight:700">Pautan Bukti Lokasi</label><select id="fac-loc"><option value="">-- Pilih Lokasi --</option>' +
+              LOCATIONS.map(function (l) {
+                return '<option value="' + l.id + '"' + (selFac.locId === l.id ? ' selected' : '') + '>' + esc(l.name) + '</option>';
+              }).join('') + '</select></div>' +
+              '<div><label style="font-size:12px;font-weight:700">Justifikasi Reka Bentuk</label><textarea id="fac-just" rows="3" placeholder="Terangkan kaitan kemudahan ini dengan bukti siasatan...">' + esc(selFac.justification) + '</textarea></div>'
+            : '<p style="font-size:13px;color:var(--ink-muted)">Klik mana-mana kemudahan pada pelan untuk mengurus justifikasi.</p>') +
+          (ui.errorMsg ? '<div class="alert-error">' + esc(ui.errorMsg) + '</div>' : '') +
+          (ui.okMsg ? '<div class="alert-ok">' + esc(ui.okMsg) + '</div>' : '') +
+          '<button type="button" class="btn btn-primary" data-action="save-plan">Simpan Pelan Sekolah Impian</button>' +
+          (phase4Done() ? '<button type="button" class="btn btn-forest" data-nav="phase5">Teruskan ke Laporan Sekolah Impian</button>' : '') +
+          '</div></div></div>';
+      }
+
+      function renderPhase5() {
+        var sCount = countSentences(state.finalReport);
+        return '<div class="container" style="padding:24px 20px;display:grid;gap:18px">' +
+          '<div class="no-print" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">' +
+          '<div><button class="btn btn-outline btn-sm" data-nav="hq">Kembali ke Pusat Operasi</button><h1 style="font-size:26px;margin-top:8px">Produk Akhir · Laporan Sekolah Impian</h1></div>' +
+          '<div style="display:flex;gap:8px"><button class="btn btn-forest btn-sm" data-action="toggle-preview">' + (ui.previewReport ? 'Sunting Laporan' : 'Pratonton Laporan') + '</button>' +
+          '<button class="btn btn-gold btn-sm" data-action="print-report">Cetak Laporan</button>' +
+          '<button class="btn btn-outline btn-sm" data-action="export-json">Eksport JSON</button></div></div>' +
+          (!ui.previewReport
+            ? '<form id="report-form" class="card" style="display:grid;gap:14px">' +
+              '<div style="display:flex;justify-content:space-between;align-items:center"><strong>Penulisan Laporan (3–5 Ayat)</strong><span class="mono">Kiraan Ayat: ' + sCount + ' / 3–5</span></div>' +
+              '<textarea id="rep-text" rows="7" placeholder="Tulis laporan pendapat anda sepanjang 3 hingga 5 ayat berdasarkan siasatan, pendapat, alasan dan pelan anda...">' + esc(state.finalReport) + '</textarea>' +
+              (ui.errorMsg ? '<div class="alert-error">' + esc(ui.errorMsg) + '</div>' : '') +
+              '<button type="submit" class="btn btn-primary">Simpan Laporan & Pratonton</button></form>'
+            : '<div class="card" style="border:2px solid var(--forest-deep);display:grid;gap:16px">' +
+              '<div style="border-bottom:2px solid var(--forest-deep);padding-bottom:12px;display:flex;justify-content:space-between">' +
+              '<div><p class="kicker">Akademi Ejen Bahasa · Laporan Rasmi</p><h2 style="font-size:24px">Laporan Sekolah Impian</h2></div>' +
+              '<div style="text-align:right;font-size:12px"><strong>' + esc(state.profile.name) + '</strong><div>' + esc(state.profile.className) + ' · ' + esc(getRank()) + '</div></div></div>' +
+              '<div class="card-cream" style="font-size:15px;white-space:pre-line">' + esc(state.finalReport) + '</div>' +
+              '<div><h3 style="font-size:16px;margin-bottom:8px">Justifikasi Reka Bentuk Utama</h3>' +
+              state.builderPlan.filter(function (p) { return (p.justification || '').trim().length >= 8; }).map(function (p) {
+                var a = ASSETS.filter(function (x) { return x.id === p.assetId; })[0];
+                return '<p style="font-size:13px;margin:4px 0"><strong>' + esc(a.name) + ':</strong> ' + esc(p.justification) + '</p>';
+              }).join('') +
+              '</div></div>') +
+          '</div>';
+      }
+
+      function renderModals() {
+        var html = '';
+        if (ui.guideOpen) {
+          html += '<div class="modal-backdrop"><div class="modal-panel">' +
+            '<h2 style="margin-bottom:10px">Panduan Permainan Ejen Bahasa</h2>' +
+            '<p style="font-size:14px">1. <strong>Operasi Jejak Bukti:</strong> Siasat 4 lokasi dan temui 3 petunjuk setiap lokasi.</p>' +
+            '<p style="font-size:14px">2. <strong>Makmal Analisis Kes:</strong> Pilih 2–3 bukti dan tulis ayat pendapat bebas.</p>' +
+            '<p style="font-size:14px">3. <strong>Buktikan Teori:</strong> Lulus 3 cabaran logik dan tulis alasan sokongan anda.</p>' +
+            '<p style="font-size:14px">4. <strong>Studio Arkitek & Laporan Akhir:</strong> Bina Pelan Sekolah Impian dan tulis laporan 3–5 ayat.</p>' +
+            '<button class="btn btn-forest" data-action="close-modals">Tutup Panduan</button></div></div>';
+        }
+        if (ui.evidenceModal) {
+          html += '<div class="modal-backdrop"><div class="modal-panel">' +
+            '<h2 style="margin-bottom:12px">Fail Bukti Ejen</h2>' +
+            LOCATIONS.map(function (l) {
+              var inv = state.investigations[l.id];
+              return '<div class="card-cream" style="margin-bottom:10px"><strong>' + esc(l.name) + '</strong>' +
+                '<p style="font-size:12px;margin:4px 0"><strong>Catatan:</strong> ' + esc(inv.notes || 'Belum dicatatkan') + '</p>' +
+                '<p style="font-size:12px;margin:0"><strong>Cadangan:</strong> ' + esc(inv.proposal || 'Belum dicatatkan') + '</p></div>';
+            }).join('') +
+            '<button class="btn btn-forest" data-action="close-modals">Tutup</button></div></div>';
+        }
+        if (ui.decisionModal) {
+          html += '<div class="modal-backdrop"><div class="modal-panel">' +
+            '<h2 style="margin-bottom:12px">Kad Keputusan Ejen</h2>' +
+            (state.selectedEvidence.length === 0 ? '<p>Belum ada pendapat direkodkan.</p>' : state.selectedEvidence.map(function (id) {
+              var l = LOCATIONS.filter(function (x) { return x.id === id; })[0];
+              return '<div class="card-cream" style="margin-bottom:10px"><strong>' + esc(l.name) + '</strong>' +
+                '<p style="font-size:12px;margin:4px 0"><strong>Pendapat:</strong> ' + esc(state.opinions[id].opinion) + '</p>' +
+                '<p style="font-size:12px;margin:0"><strong>Alasan:</strong> ' + esc(state.opinions[id].reason) + '</p></div>';
+            }).join('')) +
+            '<button class="btn btn-forest" data-action="close-modals">Tutup</button></div></div>';
+        }
+        return html;
+      }
+
+      function render() {
+        var root = document.getElementById('app');
+        var body = '';
+        if (ui.screen === 'title') body = renderLanding();
+        else if (ui.screen === 'profile') body = renderProfile();
+        else {
+          body = renderHud();
+          if (ui.screen === 'hq') body += renderHq();
+          else if (ui.screen === 'phase1') body += renderPhase1();
+          else if (ui.screen === 'phase2') body += renderPhase2();
+          else if (ui.screen === 'phase3') body += renderPhase3();
+          else if (ui.screen === 'phase4') body += renderPhase4();
+          else if (ui.screen === 'phase5') body += renderPhase5();
+        }
+        body += renderModals();
+        root.innerHTML = body;
+        bindEvents();
+      }
+
+      function bindEvents() {
+        document.querySelectorAll('[data-nav]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            beep(440, 0.06);
+            ui.errorMsg = '';
+            ui.okMsg = '';
+            ui.screen = el.getAttribute('data-nav');
+            render();
+            window.scrollTo(0, 0);
+          });
+        });
+
+        document.querySelectorAll('[data-open-loc]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            beep(440, 0.06);
+            ui.activeLocId = el.getAttribute('data-open-loc');
+            ui.activeClueId = null;
+            ui.errorMsg = '';
+            ui.okMsg = '';
+            ui.screen = 'phase1';
+            render();
+          });
+        });
+
+        document.querySelectorAll('[data-clue]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var cid = el.getAttribute('data-clue');
+            var inv = state.investigations[ui.activeLocId];
+            if (inv.clues.indexOf(cid) === -1) {
+              inv.clues.push(cid);
+              var xp = awardXp('clue_' + cid, 20);
+              if (xp) showToast('Bukti ditemui! +' + xp + ' XP');
+              beep(660, 0.14);
+            } else {
+              beep(440, 0.06);
+            }
+            ui.activeClueId = cid;
+            saveState();
+            render();
+          });
+        });
+
+        document.querySelectorAll('[data-toggle-ev]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var id = el.getAttribute('data-toggle-ev');
+            var idx = state.selectedEvidence.indexOf(id);
+            if (idx !== -1) state.selectedEvidence.splice(idx, 1);
+            else if (state.selectedEvidence.length < 3) state.selectedEvidence.push(id);
+            else ui.errorMsg = 'Maksimum 3 bukti sahaja.';
+            saveState();
+            render();
+          });
+        });
+
+        document.querySelectorAll('[data-op-id]').forEach(function (el) {
+          el.addEventListener('input', function () {
+            state.opinions[el.getAttribute('data-op-id')].opinion = el.value;
+            saveState();
+          });
+        });
+        document.querySelectorAll('[data-starter]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var id = el.getAttribute('data-starter');
+            state.opinions[id].opinion = 'Pada pendapat saya, pihak sekolah perlu ' + (state.opinions[id].opinion || '');
+            saveState();
+            render();
+          });
+        });
+
+        document.querySelectorAll('[data-logic]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var parts = el.getAttribute('data-logic').split(':');
+            state.logicAnswers[parts[0]] = parts[1];
+            if (logicDone()) {
+              var xp = awardXp('logic_done', 120);
+              if (xp) showToast('Cabaran Makmal Bukti selesai! +' + xp + ' XP');
+            }
+            beep(560, 0.1);
+            saveState();
+            render();
+          });
+        });
+
+        document.querySelectorAll('[data-rs-id]').forEach(function (el) {
+          el.addEventListener('input', function () {
+            state.opinions[el.getAttribute('data-rs-id')].reason = el.value;
+            saveState();
+          });
+        });
+
+        document.querySelectorAll('[data-asset]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var aid = el.getAttribute('data-asset');
+            ui.activeAssetId = ui.activeAssetId === aid ? null : aid;
+            ui.movingUid = null;
+            render();
+          });
+          el.addEventListener('dragstart', function (e) {
+            e.dataTransfer.setData('text/asset', el.getAttribute('data-asset'));
+          });
+        });
+
+        document.querySelectorAll('[data-drag-uid]').forEach(function (el) {
+          el.addEventListener('dragstart', function (e) {
+            e.dataTransfer.setData('text/uid', el.getAttribute('data-drag-uid'));
+          });
+        });
+
+        document.querySelectorAll('[data-cell]').forEach(function (el) {
+          var rc = el.getAttribute('data-cell').split(':').map(Number);
+          var r = rc[0], c = rc[1];
+          el.addEventListener('dragover', function (e) { e.preventDefault(); });
+          el.addEventListener('drop', function (e) {
+            e.preventDefault();
+            var aid = e.dataTransfer.getData('text/asset');
+            var uid = e.dataTransfer.getData('text/uid');
+            if (uid) {
+              var m = state.builderPlan.filter(function (p) { return p.uid === uid; })[0];
+              if (m) { m.row = r; m.col = c; ui.selectedUid = uid; }
+            } else if (aid) {
+              state.builderPlan = state.builderPlan.filter(function (p) { return !(p.row === r && p.col === c); });
+              var newUid = 'f_' + Date.now();
+              state.builderPlan.push({ uid: newUid, assetId: aid, row: r, col: c, action: 'tambah_baharu', locId: '', justification: '' });
+              ui.selectedUid = newUid;
+            }
+            beep(520, 0.08);
+            saveState();
+            render();
+          });
+          el.addEventListener('click', function () {
+            if (ui.movingUid) {
+              var m = state.builderPlan.filter(function (p) { return p.uid === ui.movingUid; })[0];
+              if (m) { m.row = r; m.col = c; ui.selectedUid = m.uid; }
+              ui.movingUid = null;
+            } else if (ui.activeAssetId) {
+              state.builderPlan = state.builderPlan.filter(function (p) { return !(p.row === r && p.col === c); });
+              var newUid = 'f_' + Date.now();
+              state.builderPlan.push({ uid: newUid, assetId: ui.activeAssetId, row: r, col: c, action: 'tambah_baharu', locId: '', justification: '' });
+              ui.selectedUid = newUid;
+              ui.activeAssetId = null;
+            } else {
+              var occ = state.builderPlan.filter(function (p) { return p.row === r && p.col === c; })[0];
+              if (occ) ui.selectedUid = occ.uid;
+            }
+            beep(460, 0.06);
+            saveState();
+            render();
+          });
+        });
+
+        var facAct = document.getElementById('fac-action');
+        if (facAct) facAct.addEventListener('change', function () {
+          var s = state.builderPlan.filter(function (p) { return p.uid === ui.selectedUid; })[0];
+          if (s) { s.action = facAct.value; saveState(); }
+        });
+        var facLoc = document.getElementById('fac-loc');
+        if (facLoc) facLoc.addEventListener('change', function () {
+          var s = state.builderPlan.filter(function (p) { return p.uid === ui.selectedUid; })[0];
+          if (s) { s.locId = facLoc.value; saveState(); }
+        });
+        var facJust = document.getElementById('fac-just');
+        if (facJust) facJust.addEventListener('input', function () {
+          var s = state.builderPlan.filter(function (p) { return p.uid === ui.selectedUid; })[0];
+          if (s) { s.justification = facJust.value; saveState(); }
+        });
+
+        document.querySelectorAll('[data-action]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var act = el.getAttribute('data-action');
+            if (act === 'toggle-sound') { state.soundEnabled = !state.soundEnabled; saveState(); render(); }
+            else if (act === 'toggle-dossier') { ui.dossierOpen = !ui.dossierOpen; render(); }
+            else if (act === 'open-guide') { ui.guideOpen = true; render(); }
+            else if (act === 'open-evidence') { ui.evidenceModal = true; render(); }
+            else if (act === 'open-decision') { ui.decisionModal = true; render(); }
+            else if (act === 'close-modals') { ui.guideOpen = false; ui.evidenceModal = false; ui.decisionModal = false; render(); }
+            else if (act === 'hint-next') {
+              var inv = state.investigations[ui.activeLocId];
+              if (inv.hint < 3) { inv.hint += 1; saveState(); beep(500, 0.1); render(); }
+            }
+            else if (act === 'move-fac') { ui.movingUid = ui.selectedUid; render(); }
+            else if (act === 'del-fac') {
+              state.builderPlan = state.builderPlan.filter(function (p) { return p.uid !== ui.selectedUid; });
+              ui.selectedUid = state.builderPlan[0] ? state.builderPlan[0].uid : null;
+              saveState(); render();
+            }
+            else if (act === 'save-plan') {
+              if (justifiedCount() < 2) {
+                ui.errorMsg = 'Sila lengkapkan justifikasi untuk sekurang-kurangnya 2 kemudahan.';
+                render(); return;
+              }
+              state.builderSaved = true;
+              ui.errorMsg = '';
+              ui.okMsg = 'Pelan Sekolah Impian berjaya disimpan!';
+              var xp = awardXp('phase4_done', 200);
+              if (xp) showToast('Lencana Pereka Bestari diperoleh! +' + xp + ' XP');
+              saveState(); render();
+            }
+            else if (act === 'toggle-preview') { ui.previewReport = !ui.previewReport; render(); }
+            else if (act === 'print-report') { window.print(); }
+            else if (act === 'export-json') {
+              var blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+              var url = URL.createObjectURL(blob);
+              var a = document.createElement('a');
+              a.href = url; a.download = 'rekod_ejen_bahasa.json'; a.click();
+              URL.revokeObjectURL(url);
+            }
+            else if (act === 'ask-reset') { ui.confirmReset = true; render(); }
+            else if (act === 'cancel-reset') { ui.confirmReset = false; render(); }
+            else if (act === 'confirm-reset') {
+              localStorage.removeItem(STORAGE_KEY);
+              state = defaultState();
+              ui.confirmReset = false;
+              ui.screen = 'title';
+              render();
+            }
+          });
+        });
+
+        var pForm = document.getElementById('profile-form');
+        if (pForm) pForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var nm = document.getElementById('inp-name').value.trim();
+          var cl = document.getElementById('inp-class').value.trim();
+          if (nm.length < 2 || cl.length < 2) {
+            ui.errorMsg = 'Sila isi Nama Ejen dan Kelas dengan lengkap.';
+            render(); return;
+          }
+          state.profile = { name: nm, className: cl };
+          var xp = awardXp('profile', 50);
+          if (xp) showToast('Identiti disahkan! +' + xp + ' XP');
+          ui.errorMsg = '';
+          ui.screen = 'hq';
+          saveState(); render();
+        });
+
+        var lForm = document.getElementById('loc-save-form');
+        if (lForm) lForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var inv = state.investigations[ui.activeLocId];
+          var notes = document.getElementById('loc-notes').value.trim();
+          var prop = document.getElementById('loc-prop').value.trim();
+          if (inv.clues.length < 3) { ui.errorMsg = 'Sila temui kesemua 3 petunjuk dahulu.'; render(); return; }
+          if (notes.length < 8 || prop.length < 8) { ui.errorMsg = 'Sila lengkapkan catatan dan cadangan awal anda.'; render(); return; }
+          inv.notes = notes; inv.proposal = prop; inv.completed = true;
+          ui.errorMsg = ''; ui.okMsg = 'Bukti lokasi berjaya disimpan!';
+          var xp = awardXp('loc_' + ui.activeLocId, 80);
+          if (xp) showToast('Bukti disimpan! +' + xp + ' XP');
+          beep(700, 0.15);
+          saveState(); render();
+        });
+
+        var p2Form = document.getElementById('phase2-form');
+        if (p2Form) p2Form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (state.selectedEvidence.length < 2 || state.selectedEvidence.length > 3) {
+            ui.errorMsg = 'Sila pilih 2 hingga 3 bukti lokasi.'; render(); return;
+          }
+          var ok = state.selectedEvidence.every(function (id) { return (state.opinions[id].opinion || '').trim().length >= 10; });
+          if (!ok) { ui.errorMsg = 'Sila tulis ayat pendapat untuk setiap bukti yang dipilih.'; render(); return; }
+          ui.errorMsg = ''; ui.okMsg = 'Ayat pendapat disimpan dalam Kad Keputusan Ejen!';
+          var xp = awardXp('phase2', 150);
+          if (xp) showToast('Lencana Penganalisis Kes diperoleh! +' + xp + ' XP');
+          saveState(); render();
+        });
+
+        var p3Form = document.getElementById('phase3-form');
+        if (p3Form) p3Form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!logicDone()) { ui.errorMsg = 'Sila selesaikan kesemua 3 cabaran Makmal Bukti dahulu.'; render(); return; }
+          var ok = state.selectedEvidence.every(function (id) { return (state.opinions[id].reason || '').trim().length >= 10; });
+          if (!ok) { ui.errorMsg = 'Sila tulis alasan penyokong bagi setiap pendapat.'; render(); return; }
+          ui.errorMsg = ''; ui.okMsg = 'Alasan penyokong berjaya disimpan!';
+          var xp = awardXp('phase3', 130);
+          if (xp) showToast('Lencana Ahli Logik diperoleh! +' + xp + ' XP');
+          saveState(); render();
+        });
+
+        var rForm = document.getElementById('report-form');
+        if (rForm) rForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var txt = document.getElementById('rep-text').value.trim();
+          var sc = countSentences(txt);
+          if (sc < 3 || sc > 5) {
+            ui.errorMsg = 'Laporan perlu mengandungi antara 3 hingga 5 ayat (kini: ' + sc + ' ayat).';
+            render(); return;
+          }
+          state.finalReport = txt;
+          state.finalReportSaved = true;
+          ui.errorMsg = ''; ui.previewReport = true;
+          var xp = awardXp('phase5', 250);
+          if (xp) showToast('Tahniah! Lencana Arkitek Sekolah Impian diperoleh! +' + xp + ' XP');
+          beep(820, 0.2);
+          saveState(); render();
+        });
+
+        var repTextEl = document.getElementById('rep-text');
+        if (repTextEl) repTextEl.addEventListener('input', function () {
+          state.finalReport = repTextEl.value;
+          saveState();
+        });
+      }
+
+      render();
+    })();
+  </script>
+</body>
+</html>
